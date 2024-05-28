@@ -1,38 +1,64 @@
 package array.finder;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class MostFrequentNumbersFinderTest
     extends TestCase
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+    @Test
+    public void testFindMostFrequentNumbersSingleMode() {
+        Integer[] array = {1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5};
+        List<Integer> expected = Collections.singletonList(4);
+        assertEquals(expected, MostFrequentNumbersFinder.findMostFrequentNumbers(array));
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
+    @Test
+    public void testFindMostFrequentNumbersMultipleModes() {
+        Integer[] array = {1, 1, 2, 2, 3, 3};
+        List<Integer> expected = Arrays.asList(1, 2, 3);
+        assertEquals(expected, MostFrequentNumbersFinder.findMostFrequentNumbers(array));
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    @Test
+    public void testFindMostFrequentNumbersSingleElement() {
+        Integer[] array = {1};
+        List<Integer> expected = Collections.singletonList(1);
+        assertEquals(expected, MostFrequentNumbersFinder.findMostFrequentNumbers(array));
+    }
+
+    @Test
+    public void testFindMostFrequentNumbersNoMode() {
+        Integer[] array = {1, 2, 3, 4, 5};
+        List<Integer> expected = Arrays.asList(1, 2, 3, 4, 5);
+        assertEquals(expected, MostFrequentNumbersFinder.findMostFrequentNumbers(array));
+    }
+
+    @Test
+    public void testFindMostFrequentNumbersEmptyArray() {
+        Integer[] array = {};
+        try {
+            MostFrequentNumbersFinder.findMostFrequentNumbers(array);
+            fail("Expected an IllegalArgumentException to be thrown");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Input array cannot be null or empty", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testFindMostFrequentNumbersNullArray() {
+        Integer[] array = null;
+        try {
+            MostFrequentNumbersFinder.findMostFrequentNumbers(array);
+        } catch (IllegalArgumentException e) {
+            assertEquals("Input array cannot be null or empty", e.getMessage());
+        }
     }
 }
